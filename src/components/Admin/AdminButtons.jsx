@@ -6,10 +6,14 @@ import "../../css/Admin/AdminButtons.css";
 const AdminButtons = () => {
   return (
     <div className="admin_btn_container">
-      <NavLink to="/manageProject" className="admin_btn">
+      <NavLink to="/admin" className="admin_btn" activeClassName="actived">
         MANAGE
       </NavLink>
-      <NavLink to="/createProject" className="admin_btn">
+      <NavLink
+        to="/createProject"
+        className="admin_btn"
+        activeClassName="actived"
+      >
         CREATE
       </NavLink>
     </div>

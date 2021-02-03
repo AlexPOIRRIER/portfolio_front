@@ -1,0 +1,22 @@
+.list_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem 1rem;
+  border-radius: 30px;
+  border: 1px solid var(--lightBlue);
+}
+
+.list_value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid blue;
+  background-color: rgb(0, 0, 255, .5);
+  height: 100%;
+  margin: 0 1rem;
+  padding: 0.5rem;
+  flex: 1;
+}

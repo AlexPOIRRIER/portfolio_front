@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import language from "./languageReducer";
+import languages from "./languageReducer";
+import projects from "./projectReducer";
 
 const rootReducer = combineReducers({
-  language,
+  languages,
+  projects,
 });
 
 export default rootReducer;
