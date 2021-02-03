@@ -1,0 +1,11 @@
+.admin_btn_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin_btn {
+  height: 4rem;
+  border: 1px solid black;
+  margin: 2rem;
+}
