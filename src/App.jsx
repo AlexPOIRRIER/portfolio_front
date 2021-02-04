@@ -5,10 +5,9 @@ import { connect } from "react-redux";
 import Home from "./components/Home/Home";
 import Admin from "./components/Admin/Admin";
 import CreateProject from "./components/Project/CreateProject";
-import EditProject from "./components/Project/EditProject";
 
 import { getAllLanguages } from "./redux/actions/languageActions";
-import { getAllProjects, setProject } from "./redux/actions/projectActions";
+import { getAllProjects } from "./redux/actions/projectActions";
 
 import "./App.css";
 import Footer from "./components/Footer";
@@ -16,7 +15,7 @@ import Header from "./components/Header/Header";
 import axios from "axios";
 import ProjectDetails from "./components/Home/ProjectDetails";
 
-const App = ({ projects, getAllLanguages, getAllProjects, setProject }) => {
+const App = ({ projects, getAllLanguages, getAllProjects }) => {
   useEffect(() => {
     getAllLanguages();
     getAllProjects();
@@ -46,7 +45,6 @@ const mapStateToProps = ({ projects }) => ({
 const mapDispatchToProps = (dispatch) => ({
   getAllProjects: getAllProjects(dispatch),
   getAllLanguages: getAllLanguages(dispatch),
-  setProject: setProject(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -26,24 +26,39 @@ const NewLanguageForm = ({ addLanguage, language }) => {
 
   return (
     <div className="new_language_container">
-      <button type="button" onClick={() => setToggle(!toggle)}>
-        Ajouter une nouveau langage
-      </button>
-      {toggle && (
-        <label htmlFor="new_language" className="form_label">
-          Langage :
-          <input
-            type="text"
-            name="new_language"
-            className="form_input"
-            value={newLanguage}
-            onChange={handleNewLanguage}
-          />
-        </label>
+      {!toggle && (
+        <button
+          type="button"
+          className="form_btn"
+          onClick={() => setToggle(!toggle)}
+        >
+          Ajouter
+        </button>
       )}
-      <button type="button" onClick={handleSubmit}>
-        ok
-      </button>
+      {toggle && (
+        <>
+          <label htmlFor="new_language" className="form_label">
+            Langage :
+            <input
+              type="text"
+              name="new_language"
+              className="form_input"
+              value={newLanguage}
+              onChange={handleNewLanguage}
+            />
+          </label>
+          <button type="button" className="form_btn" onClick={handleSubmit}>
+            Ajouter
+          </button>
+          <button
+            type="button"
+            className="form_btn"
+            onClick={() => setToggle(!toggle)}
+          >
+            Annuler
+          </button>
+        </>
+      )}
     </div>
   );
 };

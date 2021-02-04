@@ -9,7 +9,6 @@ import "../../css/Home/Home.css";
 const Home = ({ projects }) => {
   return (
     <>
-      <Link to="/admin">ADMIN</Link>
       {projects && (
         <>
           <h2 className="page_title">Projets :</h2>

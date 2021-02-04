@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 import "../../css/Project/ProjectPreview.css";
 
 const ProjectPreview = ({ name, link, duration, client, background }) => {
-  background && console.log(background);
   return (
     <div
       className="preview_container"
-      style={{ background: `url(${background})` }}
+      style={
+        background
+          ? { background: `url(${background})`, backgroundSize: "cover", animation: 'backMove 150s infinite' }
+          : { backgroundColor: "rgb(0,0,0,0.5)" }
+      }
     >
-      <h3 className="project_title">{name}</h3>
+      <h3 className="project_title_preview">{name}</h3>
       <a href={link} target="_blank" rel="noreferrer">
         {link}
       </a>

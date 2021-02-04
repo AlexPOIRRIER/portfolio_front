@@ -6,9 +6,19 @@ import NewLanguageForm from "../Admin/NewLanguageForm";
 
 import "../../css/Project/CreateProject.css";
 import { Link, Redirect } from "react-router-dom";
-import { addProject, getAllProjects } from "../../redux/actions/projectActions";
+import {
+  getProjectLanguages,
+  setProjectLanguages,
+} from "../../redux/actions/joinLanguageProjectActions";
 
-const CreateProject = ({ projects, languages, match, getAllProjects }) => {
+const CreateProject = ({
+  projects,
+  languages,
+  match,
+  getProjectLanguages,
+  setProjectLanguages,
+  projectLanguages,
+}) => {
   const editId = +match.params.id;
   const [redirect, setRedirect] = useState(false);
   const [currentProject, setCurrentProject] = useState({});
@@ -33,12 +43,18 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
   };
 
   const handleLanguageChange = (event) => {
-    event.target.checked
-      ? setLanguageData([...languageData, event.target.id])
-      : setLanguageData(
-          languageData.filter((lang) => lang !== event.target.id)
-        );
+    if (event.target.checked) {
+      setProjectLanguages([
+        ...projectLanguages,
+        { id: +event.target.id, name: event.target.value },
+      ]);
+    } else {
+      setProjectLanguages(
+        projectLanguages.filter((lang) => lang.id !== +event.target.id)
+      );
+    }
   };
+
   const handleClientChange = (event) => {
     if (currentProject) {
       setCurrentProject({ ...currentProject, client_name: event.target.value });
@@ -46,6 +62,13 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
       setClientData({ name: event.target.value });
     }
   };
+
+  const handleClear = () => {
+    setCurrentProject(null);
+    setProjectLanguages();
+    setRedirect(true);
+  };
+
   const handleEditSubmit = async (event) => {
     event.preventDefault();
     if (currentProject) {
@@ -58,24 +81,28 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
           background: currentProject.background,
         }
       );
-      const dataProject = projectResult.data;
-      console.log(dataProject);
-      // languageData.map((lang) =>
-      //   axios.put(`${process.env.REACT_APP_API}/jlp`, {
-      //     id_language: +lang,
-      //     id_project: dataProject.id,
-      //   })
-      // );
+      // const dataProject = projectResult.data;
+      const reset = await axios.delete(
+        `${process.env.REACT_APP_API}/jlp/project/${editId}`
+      );
+      if (reset.status === 200) {
+        projectLanguages.map((lang) =>
+          axios.post(`${process.env.REACT_APP_API}/jlp`, {
+            id_language: lang.id,
+            id_project: editId,
+          })
+        );
+      }
       const clientResult = await axios.put(
         `${process.env.REACT_APP_API}/clients/${currentProject.client_id}`,
         { name: currentProject.client_name }
       );
-      const dataClient = clientResult.data;
-      console.log(dataClient);
+      // const dataClient = clientResult.data;
     }
+    setCurrentProject(null);
+    setProjectLanguages();
     setRedirect(true);
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const projectResult = await axios.post(
@@ -83,9 +110,9 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
       projectData
     );
     const dataProject = projectResult.data;
-    languageData.map((lang) =>
+    projectLanguages.map((lang) =>
       axios.post(`${process.env.REACT_APP_API}/jlp`, {
-        id_language: +lang,
+        id_language: lang.id,
         id_project: dataProject.id,
       })
     );
@@ -101,22 +128,26 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
         id_client: dataClient.id,
       });
     }
+    setCurrentProject(null);
+    setProjectLanguages();
     setRedirect(true);
   };
 
   useEffect(() => {
     if (editId) {
       setCurrentProject(
-        projects.filter((project) => project.project_id === +editId)[0]
+        projects.filter((project) => project.project_id === editId)[0]
       );
+      getProjectLanguages(editId);
     } else {
       setCurrentProject(null);
     }
   }, [editId]);
-  editId && console.log(editId);
+
+  console.log(projectLanguages);
   return (
     <div className="admin_page_container">
-      {/* <AdminButtons /> */}
+      <h2>{editId ? "Modifier un projet" : "Créer un projet"}</h2>
       <form className="form_container">
         <div
           className="project_form"
@@ -163,11 +194,6 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
               }
               onChange={handleProjectChange}
             />
-            {/* <select>
-              <option value="jours">jours</option>
-              <option value="mois">mois</option>
-              <option value="années">années</option>
-            </select> */}
           </label>
           <label htmlFor="background" className="form_label">
             Image de couverture :
@@ -187,19 +213,19 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
         </div>
         <div className="language_form">
           <h3 className="form_subtitle">Technologies utilisées :</h3>
-          {languages &&
-            languages.map((lang) => (
-              <label htmlFor="project_language" className="checkbox_label">
-                <input
-                  type="checkbox"
-                  name="project_language"
-                  id={lang.id}
-                  onClick={handleLanguageChange}
-                />
-                <span>{lang.name}</span>
-              </label>
-            ))}
-
+          {languages.map((lang) => (
+            <label htmlFor="project_language" className="checkbox_label">
+              <input
+                type="checkbox"
+                name="project_language"
+                id={lang.id}
+                value={lang.name}
+                checked={projectLanguages.find((e) => e.id === +lang.id)}
+                onChange={handleLanguageChange}
+              />
+              <span>{lang.name}</span>
+            </label>
+          ))}
           <NewLanguageForm />
         </div>
         <div className="client_form">
@@ -218,34 +244,34 @@ const CreateProject = ({ projects, languages, match, getAllProjects }) => {
           </label>
         </div>
       </form>
-      {currentProject ? (
-        <button type="button" className="admin_btn" onClick={handleEditSubmit}>
-          Confirmer
-        </button>
-      ) : (
-        <button type="button" className="admin_btn" onClick={handleSubmit}>
-          Confirmer
-        </button>
-      )}
-      <Link
-        to="/admin"
-        className="admin_btn"
-        onClick={() => setCurrentProject(null)}
-      >
-        Annuler
-      </Link>
-      {redirect && <Redirect to="/admin" />}
+      <div className="form_btn_container">
+        {currentProject ? (
+          <button type="button" className="form_btn" onClick={handleEditSubmit}>
+            Confirmer
+          </button>
+        ) : (
+          <button type="button" className="form_btn" onClick={handleSubmit}>
+            Confirmer
+          </button>
+        )}
+        <Link to="/admin" onClick={handleClear}>
+          <button className="form_btn">Annuler</button>
+        </Link>
+        {redirect && <Redirect to="/admin" />}
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ languages, projects }) => ({
+const mapStateToProps = ({ languages, projects, projectLanguages }) => ({
   languages,
   projects,
+  projectLanguages,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllProjects: getAllProjects(dispatch),
+  getProjectLanguages: getProjectLanguages(dispatch),
+  setProjectLanguages: setProjectLanguages(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import Title from "./Title";
 import SocialMedia from "./SocialMedia";
 
@@ -8,7 +9,10 @@ const Header = () => {
   return (
     <header className="header_container">
       <Title />
-      <SocialMedia />
+      {/* <SocialMedia /> */}
+      <Link to="/admin" className="admin_btn">
+        ADMIN
+      </Link>
     </header>
   );
 };

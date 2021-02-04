@@ -4,21 +4,27 @@
   justify-content: center;
   align-items: center;
   margin: 2rem;
-  height: 30rem;
-  width: 25rem;
+  height: 25rem;
+  width: 20rem;
   border-radius: 30px;
+  border: 1px solid transparent;
   background-color: lightblue;
-  animation: backMove 300s infinite;
+  transition: 0.5s ease;
 }
 
-.project_title {
+.preview_container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px 5px rgb(0, 0, 0, 0.5);
+}
+
+.project_title_preview {
   text-decoration: none;
   font-size: 2.5rem;
   color: white;
   text-shadow: 1px 1px 5px black;
 }
 
-/* @keyframes backMove {
+@keyframes backMove {
   0% {
     background-position: top left;
   }
@@ -28,4 +34,4 @@
   100% {
     background-position: top left;
   }
-} */
+}

@@ -27,7 +27,11 @@ const ProjectList = ({
     <Link
       to={`/editProject/${id}`}
       className="list_container"
-      style={{ background: `url(${background})`, backgroundSize: "cover" }}
+      style={
+        background
+          ? { background: `url(${background})`, backgroundSize: "cover" }
+          : { backgroundColor: "rgb(0,0,0,0.5)" }
+      }
     >
       {name && <h3 className="project_title">{name}</h3>}
       {link && (
