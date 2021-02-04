@@ -2,25 +2,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import AdminButtons from "../Admin/AdminButtons";
 import NewLanguageForm from "../Admin/NewLanguageForm";
 
 import "../../css/Project/CreateProject.css";
+import { Link, Redirect } from "react-router-dom";
+import { addProject, getAllProjects } from "../../redux/actions/projectActions";
 
-const CreateProject = ({ projects, languages, match }) => {
-  const editId = match.params.id;
+const CreateProject = ({ projects, languages, match, getAllProjects }) => {
+  const editId = +match.params.id;
+  const [redirect, setRedirect] = useState(false);
   const [currentProject, setCurrentProject] = useState({});
-  const [toggleEdit, setToggleEdit] = useState(false);
   const [projectData, setProjectData] = useState({
     name: "",
     link: "",
     duration: "",
+    background: "",
   });
   const [languageData, setLanguageData] = useState([]);
   const [clientData, setClientData] = useState({ name: "" });
 
   const handleProjectChange = (event) => {
-    setProjectData({ ...projectData, [event.target.id]: event.target.value });
+    if (currentProject) {
+      setCurrentProject({
+        ...currentProject,
+        [event.target.name]: event.target.value,
+      });
+    } else {
+      setProjectData({ ...projectData, [event.target.id]: event.target.value });
+    }
   };
 
   const handleLanguageChange = (event) => {
@@ -31,7 +40,40 @@ const CreateProject = ({ projects, languages, match }) => {
         );
   };
   const handleClientChange = (event) => {
-    setClientData({ name: event.target.value });
+    if (currentProject) {
+      setCurrentProject({ ...currentProject, client_name: event.target.value });
+    } else {
+      setClientData({ name: event.target.value });
+    }
+  };
+  const handleEditSubmit = async (event) => {
+    event.preventDefault();
+    if (currentProject) {
+      const projectResult = await axios.put(
+        `${process.env.REACT_APP_API}/projects/${editId}`,
+        {
+          name: currentProject.project_name,
+          link: currentProject.project_link,
+          duration: currentProject.project_duration,
+          background: currentProject.background,
+        }
+      );
+      const dataProject = projectResult.data;
+      console.log(dataProject);
+      // languageData.map((lang) =>
+      //   axios.put(`${process.env.REACT_APP_API}/jlp`, {
+      //     id_language: +lang,
+      //     id_project: dataProject.id,
+      //   })
+      // );
+      const clientResult = await axios.put(
+        `${process.env.REACT_APP_API}/clients/${currentProject.client_id}`,
+        { name: currentProject.client_name }
+      );
+      const dataClient = clientResult.data;
+      console.log(dataClient);
+    }
+    setRedirect(true);
   };
 
   const handleSubmit = async (event) => {
@@ -59,22 +101,22 @@ const CreateProject = ({ projects, languages, match }) => {
         id_client: dataClient.id,
       });
     }
+    setRedirect(true);
   };
 
   useEffect(() => {
-    if (currentProject) {
-      setToggleEdit(true);
+    if (editId) {
       setCurrentProject(
         projects.filter((project) => project.project_id === +editId)[0]
       );
     } else {
-      setToggleEdit(false);
       setCurrentProject(null);
     }
-  }, [currentProject]);
-  console.log(currentProject);
+  }, [editId]);
+  editId && console.log(editId);
   return (
     <div className="admin_page_container">
+      {/* <AdminButtons /> */}
       <form className="form_container">
         <div
           className="project_form"
@@ -88,7 +130,9 @@ const CreateProject = ({ projects, languages, match }) => {
               id="name"
               name="project_name"
               className="form_input"
-              value={projectData.name}
+              value={
+                currentProject ? currentProject.project_name : projectData.name
+              }
               onChange={handleProjectChange}
             />
           </label>
@@ -99,7 +143,9 @@ const CreateProject = ({ projects, languages, match }) => {
               id="link"
               name="project_link"
               className="form_input"
-              value={projectData.link}
+              value={
+                currentProject ? currentProject.project_link : projectData.link
+              }
               onChange={handleProjectChange}
             />
           </label>
@@ -110,17 +156,35 @@ const CreateProject = ({ projects, languages, match }) => {
               id="duration"
               name="project_duration"
               className="form_input"
-              value={projectData.duration}
+              value={
+                currentProject
+                  ? currentProject.project_duration
+                  : projectData.duration
+              }
               onChange={handleProjectChange}
             />
-            <select>
+            {/* <select>
               <option value="jours">jours</option>
               <option value="mois">mois</option>
               <option value="années">années</option>
-            </select>
+            </select> */}
+          </label>
+          <label htmlFor="background" className="form_label">
+            Image de couverture :
+            <input
+              type="text"
+              id="background"
+              name="background"
+              className="form_input"
+              value={
+                currentProject
+                  ? currentProject.background
+                  : projectData.background
+              }
+              onChange={handleProjectChange}
+            />
           </label>
         </div>
-
         <div className="language_form">
           <h3 className="form_subtitle">Technologies utilisées :</h3>
           {languages &&
@@ -146,15 +210,31 @@ const CreateProject = ({ projects, languages, match }) => {
               type="text"
               name="project_client"
               className="form_input"
-              value={clientData.name}
+              value={
+                currentProject ? currentProject.client_name : clientData.name
+              }
               onChange={handleClientChange}
             />
           </label>
         </div>
       </form>
-      <button type="button" className="admin_btn" onClick={handleSubmit}>
-        Confirmer
-      </button>
+      {currentProject ? (
+        <button type="button" className="admin_btn" onClick={handleEditSubmit}>
+          Confirmer
+        </button>
+      ) : (
+        <button type="button" className="admin_btn" onClick={handleSubmit}>
+          Confirmer
+        </button>
+      )}
+      <Link
+        to="/admin"
+        className="admin_btn"
+        onClick={() => setCurrentProject(null)}
+      >
+        Annuler
+      </Link>
+      {redirect && <Redirect to="/admin" />}
     </div>
   );
 };
@@ -164,4 +244,8 @@ const mapStateToProps = ({ languages, projects }) => ({
   projects,
 });
 
-export default connect(mapStateToProps, null)(CreateProject);
+const mapDispatchToProps = (dispatch) => ({
+  getAllProjects: getAllProjects(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);

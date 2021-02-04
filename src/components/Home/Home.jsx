@@ -10,17 +10,24 @@ const Home = ({ projects }) => {
   return (
     <>
       <Link to="/admin">ADMIN</Link>
-      <h2 className="page_title">Projets :</h2>
-      <div className="project_preview_container">
-        {projects.map((project) => (
-          <ProjectPreview
-            name={project.project_name}
-            link={project.project_name}
-            duration={project.project_duration}
-            client={project.client_name}
-          />
-        ))}
-      </div>
+      {projects && (
+        <>
+          <h2 className="page_title">Projets :</h2>
+          <div className="project_preview_container">
+            {projects.map((project) => (
+              <Link to={`/project/${project.project_id}`}>
+                <ProjectPreview
+                  name={project.project_name}
+                  // link={project.project_link}
+                  // duration={project.project_duration}
+                  // client={project.client_name}
+                  background={project.background}
+                />
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 };

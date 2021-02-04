@@ -3,20 +3,59 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0;
-  padding: 1rem 1rem;
+  height: 9rem;
+  margin: 1rem;
+  padding: 0 1rem;
   border-radius: 30px;
   border: 1px solid var(--lightBlue);
+  color: white;
+  text-shadow: 1px 1px 5px black;
+}
+
+.project_title {
+  flex: 1;
+}
+
+.list_name {
+  font-size: 1.1rem;
 }
 
 .list_value {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
-  background-color: rgb(0, 0, 255, .5);
-  height: 100%;
   margin: 0 1rem;
-  padding: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: bold;
   flex: 1;
+}
+
+.add_list {
+  background-color: rgb(255, 255, 255, 0.1);
+  border: 2px dashed white;
+  margin: 0 1rem 3rem 1rem;
+}
+
+.add_icon {
+  width: 3rem;
+  fill: white;
+}
+
+.delete_project_btn {
+  display: flex;
+  align-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: rgb(255, 0, 0);
+  border-radius: 50%;
+  outline: transparent;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: 0.5rem;
+}
+
+.delete_project_icon {
+  fill: white;
+  width: 1.5rem;
 }
