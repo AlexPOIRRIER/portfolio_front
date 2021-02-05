@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import { addLanguage } from "../../redux/actions/languageActions";
+import { addLanguage } from "../../../redux/actions/languageActions";
 
 const NewLanguageForm = ({ addLanguage, language }) => {
   const [toggle, setToggle] = useState(false);

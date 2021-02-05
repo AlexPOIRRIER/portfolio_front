@@ -1,15 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-
-import NewLanguageForm from "../Admin/NewLanguageForm";
-
-import "../../css/Project/CreateProject.css";
 import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
+
 import {
   getProjectLanguages,
   setProjectLanguages,
-} from "../../redux/actions/joinLanguageProjectActions";
+} from "../../../redux/actions/joinLanguageProjectActions";
+
+import NewLanguageForm from "./NewLanguageForm";
+
+import "../../../css/Project/Forms/CreateProject.css";
 
 const CreateProject = ({
   projects,
@@ -72,16 +73,12 @@ const CreateProject = ({
   const handleEditSubmit = async (event) => {
     event.preventDefault();
     if (currentProject) {
-      const projectResult = await axios.put(
-        `${process.env.REACT_APP_API}/projects/${editId}`,
-        {
-          name: currentProject.project_name,
-          link: currentProject.project_link,
-          duration: currentProject.project_duration,
-          background: currentProject.background,
-        }
-      );
-      // const dataProject = projectResult.data;
+      await axios.put(`${process.env.REACT_APP_API}/projects/${editId}`, {
+        name: currentProject.project_name,
+        link: currentProject.project_link,
+        duration: currentProject.project_duration,
+        background: currentProject.background,
+      });
       const reset = await axios.delete(
         `${process.env.REACT_APP_API}/jlp/project/${editId}`
       );
@@ -93,11 +90,10 @@ const CreateProject = ({
           })
         );
       }
-      const clientResult = await axios.put(
+      await axios.put(
         `${process.env.REACT_APP_API}/clients/${currentProject.client_id}`,
         { name: currentProject.client_name }
       );
-      // const dataClient = clientResult.data;
     }
     setCurrentProject(null);
     setProjectLanguages();

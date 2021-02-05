@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import ProjectList from "../Project/ProjectList";
-import "../../css/Admin/Admin.css";
-import { getAllProjects } from "../../redux/actions/projectActions";
-import { AddIcon } from "../../utils/svg";
+import { connect } from "react-redux";
+
+import { getAllProjects } from "../redux/actions/projectActions";
+
+import ProjectList from "./Project/ProjectList";
+
+import { AddIcon } from "../utils/svg";
+
+import "../css/Admin.css";
 
 const Admin = ({ projects, getAllProjects }) => {
   useEffect(() => {
     getAllProjects();
-  }, [window.location]);
+  }, [window.location.pathname]);
 
   return (
     <section className="admin_page_container">

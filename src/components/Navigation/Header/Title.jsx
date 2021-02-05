@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "../../css/Header/Title.css";
+import "../../../css/Navigation/Header/Title.css";
 
 const Title = () => {
   const title = "PORTFOLIO";

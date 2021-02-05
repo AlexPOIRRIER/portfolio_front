@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import ProjectPreview from "../Project/ProjectPreview";
+import ProjectPreview from "./Project/ProjectPreview";
 
-import "../../css/Home/Home.css";
+import "../css/Home.css";
 
 const Home = ({ projects }) => {
   return (
@@ -17,9 +17,6 @@ const Home = ({ projects }) => {
               <Link to={`/project/${project.project_id}`}>
                 <ProjectPreview
                   name={project.project_name}
-                  // link={project.project_link}
-                  // duration={project.project_duration}
-                  // client={project.client_name}
                   background={project.background}
                 />
               </Link>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import ProjectPreview from "../Project/ProjectPreview";
+import ProjectPreview from "./ProjectPreview";
 import LoadingSpinner from "../_reusable/LoadingSpinner";
 
 import { getProjectLanguages } from "../../redux/actions/joinLanguageProjectActions";
 
-import "../../css/Home/ProjectDetails.css";
-import { Link } from "react-router-dom";
+import "../../css/Project/ProjectDetails.css";
+
 import { ArrowIcon } from "../../utils/svg";
-import projectLanguages from "../../redux/reducers/joinLanguageProjectReducer";
 
 const ProjectDetails = ({
   projects,
@@ -57,7 +57,7 @@ const ProjectDetails = ({
               </a>
               <span className="info_title">Durée du projet : </span>
               <span className="info_value">
-                {currentProject.client_duration}
+                {currentProject.project_duration}
               </span>
               <span className="info_title">Client : </span>
               <span className="info_value">{currentProject.client_name}</span>
