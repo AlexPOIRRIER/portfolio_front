@@ -1,20 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setPopUp } from "../../redux/actions/popupActions";
+import { setPopUp, setPopUpFunction } from "../../redux/actions/popupActions";
 
 import "../../css/_reusable/ConfirmCancelButtons.css";
 import { CancelIcon, ConfirmIcon } from "../../utils/svg";
 
-const ConfirmCancelButtons = ({ setPopUp, func }) => {
+const ConfirmCancelButtons = ({ popUp, setPopUp, setPopUpFunction }) => {
   const handleConfirm = async (event) => {
     event.preventDefault();
+    await popUp.func();
     setPopUp();
-    func();
+    // setPopUpFunction();
   };
   const handleCancel = (event) => {
     event.preventDefault();
     setPopUp();
+    console.log(1)
+    // setPopUpFunction();
   };
   return (
     <div className="cc_btn_container">
@@ -30,8 +33,16 @@ const ConfirmCancelButtons = ({ setPopUp, func }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setPopUp: setPopUp(dispatch),
+const mapStateToProps = ({ popUp }) => ({
+  popUp,
 });
 
-export default connect(null, mapDispatchToProps)(ConfirmCancelButtons);
+const mapDispatchToProps = (dispatch) => ({
+  setPopUp: setPopUp(dispatch),
+  setPopUpFunction: setPopUpFunction(dispatch),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmCancelButtons);

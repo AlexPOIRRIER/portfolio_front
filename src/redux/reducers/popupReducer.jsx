@@ -1,9 +1,13 @@
-const popUp = (state = false, action) => {
+const popUp = (state = { toggle: false, func: null }, action) => {
   switch (action.type) {
     case "SHOW_POPUP":
-      return action.payload;
+      return { ...state, toggle: action.payload };
     case "HIDE_POPUP":
-      return action.payload;
+      return { ...state, toggle: action.payload };
+    case "SET_POPUP_FUNCTION":
+      return { ...state, func: action.payload };
+    case "RESET_POPUP_FUNCTION":
+      return { ...state, func: action.payload };
     default:
       return state;
   }

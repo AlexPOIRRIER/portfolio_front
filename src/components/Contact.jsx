@@ -2,15 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { setPopUp } from "../redux/actions/popupActions";
+import { setPopUpFunction } from "../redux/actions/popupActions";
 
 import PopUp from "./_reusable/PopUp";
 
 import "../css/Contact.css";
 
-const Contact = ({ popUp, setPopUp }) => {
+const Contact = ({ popUp, setPopUp, setPopUpFunction }) => {
   const handleSubmit = () => {
     console.log("ok");
   };
+  console.log(popUp);
+  const handlePopUp = () => {
+    setPopUp(true);
+    setPopUpFunction(handleSubmit);
+  };
+
   return (
     <form className="contact_form">
       <label htmlFor="name" className="form_label">
@@ -23,7 +30,7 @@ const Contact = ({ popUp, setPopUp }) => {
         />
       </label>
       <label htmlFor="email" className="form_label">
-        Sujet :
+        E-mail :
         <input
           type="email"
           name="email"
@@ -49,12 +56,10 @@ const Contact = ({ popUp, setPopUp }) => {
           style={{ height: "12rem", width: "20rem", resize: "none" }}
         />
       </label>
-      <button type="button" className="form_btn" onClick={() => setPopUp(true)}>
+      <button type="button" className="form_btn" onClick={handlePopUp}>
         Envoyer
       </button>
-      {popUp && (
-        <PopUp text={"Confirmer l'envoi du message ?"} func={handleSubmit} />
-      )}
+      {popUp.toggle && <PopUp text={"Confirmer l'envoi du message ?"} />}
     </form>
   );
 };
@@ -65,6 +70,7 @@ const mapStateToProps = ({ popUp }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setPopUp: setPopUp(dispatch),
+  setPopUpFunction: setPopUpFunction(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact);
