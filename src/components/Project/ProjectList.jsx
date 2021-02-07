@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { setPopUp, setPopUpFunction } from "../../redux/actions/popupActions";
+import { setPopUp } from "../../redux/actions/popupActions";
 import "../../css/Project/ProjectList.css";
 import { deleteProject } from "../../redux/actions/projectActions";
 import { DeleteIcon } from "../../utils/svg";
@@ -16,20 +16,19 @@ const ProjectList = ({
   duration,
   client,
   background,
-  projects,
+  allProjects,
   deleteProject,
   popUp,
   setPopUp,
-  setPopUpFunction,
 }) => {
   const handleDelete = () => {
     axios.delete(`${process.env.REACT_APP_API}/projects/${id}`);
-    deleteProject(projects, id);
+    deleteProject(allProjects, id);
   };
   const handlePopUp = () => {
-    setPopUp(true);
-    setPopUpFunction(handleDelete);
+    setPopUp(true, handleDelete);
   };
+
   return (
     <div className="test">
       <Link
@@ -73,15 +72,14 @@ const ProjectList = ({
   );
 };
 
-const mapStateToProps = ({ projects, popUp }) => ({
-  projects,
+const mapStateToProps = ({ allProjects, popUp }) => ({
+  allProjects,
   popUp,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   deleteProject: deleteProject(dispatch),
   setPopUp: setPopUp(dispatch),
-  setPopUpFunction: setPopUpFunction(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

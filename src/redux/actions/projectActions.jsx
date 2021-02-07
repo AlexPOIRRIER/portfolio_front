@@ -35,12 +35,12 @@ export const addProject = (dispatch) => async (projectId) => {
   });
 };
 
-export const setProject = (dispatch) => async (allProjects) => {
-  dispatch({
-    type: "SET_PROJECT",
-    payload: allProjects,
-  });
-};
+// export const setProject = (dispatch) => async (allProjects) => {
+//   dispatch({
+//     type: "SET_PROJECT",
+//     payload: allProjects,
+//   });
+// };
 
 export const deleteProject = (dispatch) => async (projects, projectId) => {
   dispatch({

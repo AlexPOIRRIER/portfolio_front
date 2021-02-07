@@ -1,27 +1,13 @@
 export const setPopUp = (dispatch) => async (bool, func) => {
-  if (bool) {
+  if (bool && func) {
     dispatch({
-      type: "SHOW_POPUP",
-      payload: true,
+      type: "SET_POPUP",
+      payload: { toggle: bool, func: func },
     });
   } else {
     dispatch({
-      type: "HIDE_POPUP",
-      payload: false,
-    });
-  }
-};
-
-export const setPopUpFunction = (dispatch) => async (func) => {
-  if (func) {
-    dispatch({
-      type: "SET_POPUP_FUNCTION",
-      payload: func,
-    });
-  } else {
-    dispatch({
-      type: "RESET_POPUP_FUNCTION",
-      payload: null,
+      type: "RESET_POPUP",
+      payload: { toggle: false, func: null },
     });
   }
 };

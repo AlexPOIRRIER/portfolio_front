@@ -1,4 +1,4 @@
-const languages = (state = [], action) => {
+const allLanguages = (state = [], action) => {
   switch (action.type) {
     case "GET_ALL_LANGUAGES_RESULT":
       return action.payload;
@@ -9,4 +9,4 @@ const languages = (state = [], action) => {
   }
 };
 
-export default languages;
+export default allLanguages;

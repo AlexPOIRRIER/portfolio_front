@@ -20,7 +20,7 @@
   align-items: center;
   width: 20rem;
   height: 20rem;
-  border: 1px solid #38cccc;
+  border: 1px solid var(--lightBlue);
   border-radius: 30px;
   background-color: var(--darkBlue);
   box-shadow: 5px 5px 10px 1px rgb(0, 0, 0, 0.3);

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { addLanguage } from "../../../redux/actions/languageActions";
 
-const NewLanguageForm = ({ addLanguage, language }) => {
+const NewLanguageForm = ({ addLanguage }) => {
   const [toggle, setToggle] = useState(false);
   const [newLanguage, setNewLanguage] = useState("");
 
@@ -63,12 +63,8 @@ const NewLanguageForm = ({ addLanguage, language }) => {
   );
 };
 
-const mapStateToProps = ({ language }) => ({
-  language,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   addLanguage: addLanguage(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewLanguageForm);
+export default connect(null, mapDispatchToProps)(NewLanguageForm);

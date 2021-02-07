@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { getAllProjects } from "../redux/actions/projectActions";
+import { getAllMessages } from "../redux/actions/messageActions";
 
 import ProjectList from "./Project/ProjectList";
 
@@ -10,9 +11,10 @@ import { AddIcon } from "../utils/svg";
 
 import "../css/Admin.css";
 
-const Admin = ({ projects, getAllProjects }) => {
+const Admin = ({ allProjects, getAllProjects, getAllMessages }) => {
   useEffect(() => {
     getAllProjects();
+    getAllMessages();
   }, [window.location.pathname]);
 
   return (
@@ -23,7 +25,7 @@ const Admin = ({ projects, getAllProjects }) => {
       </Link>
       <h2 className="list_title">Mes projets</h2>
       <span>(Cliquez sur un projet pour l'éditer)</span>
-      {projects.map((project) => (
+      {allProjects.map((project) => (
         <ProjectList
           id={project.project_id}
           name={project.project_name}
@@ -36,12 +38,13 @@ const Admin = ({ projects, getAllProjects }) => {
     </section>
   );
 };
-const mapStateToProps = ({ projects }) => ({
-  projects,
+const mapStateToProps = ({ allProjects }) => ({
+  allProjects,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getAllProjects: getAllProjects(dispatch),
+  getAllMessages: getAllMessages(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

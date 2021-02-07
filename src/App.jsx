@@ -8,12 +8,14 @@ import { getAllProjects } from "./redux/actions/projectActions";
 import Header from "./components/Navigation/Header/Header";
 import Home from "./components/Home";
 import Admin from "./components/Admin";
-import CreateProject from "./components/Project/Forms/CreateProject";
+import ProjectForm from "./components/Project/Forms/ProjectForm";
 import ProjectDetails from "./components/Project/ProjectDetails";
 import Contact from "./components/Contact";
+import MessageList from "./components/Message/MessageList";
 import Footer from "./components/Navigation/Footer";
 
 import "./App.css";
+import MessageDetails from "./components/Message/MessageDetails";
 
 const App = ({ getAllLanguages, getAllProjects }) => {
   useEffect(() => {
@@ -29,9 +31,11 @@ const App = ({ getAllLanguages, getAllProjects }) => {
           <Route exact path="/" component={Home} />
           <Route path="/project/:id" component={ProjectDetails} />
           <Route path="/admin" component={Admin} />
-          <Route path="/createProject" component={CreateProject} />
-          <Route path="/editProject/:id" component={CreateProject} />
+          <Route path="/createProject" component={ProjectForm} />
+          <Route path="/editProject/:id" component={ProjectForm} />
           <Route path="/contact" component={Contact} />
+          <Route path="/messages" component={MessageList} />
+          <Route path="/message/:id" component={MessageDetails} />
         </Switch>
       </main>
       <Footer />

@@ -10,15 +10,15 @@ import {
 
 import NewLanguageForm from "./NewLanguageForm";
 
-import "../../../css/Project/Forms/CreateProject.css";
+import "../../../css/Project/Forms/ProjectForm.css";
 
-const CreateProject = ({
-  projects,
-  languages,
+const ProjectForm = ({
   match,
+  allProjects,
+  allLanguages,
+  projectLanguages,
   getProjectLanguages,
   setProjectLanguages,
-  projectLanguages,
 }) => {
   const editId = +match.params.id;
   const [redirect, setRedirect] = useState(false);
@@ -29,7 +29,6 @@ const CreateProject = ({
     duration: "",
     background: "",
   });
-  const [languageData, setLanguageData] = useState([]);
   const [clientData, setClientData] = useState({ name: "" });
 
   const handleProjectChange = (event) => {
@@ -99,6 +98,7 @@ const CreateProject = ({
     setProjectLanguages();
     setRedirect(true);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const projectResult = await axios.post(
@@ -132,7 +132,7 @@ const CreateProject = ({
   useEffect(() => {
     if (editId) {
       setCurrentProject(
-        projects.filter((project) => project.project_id === editId)[0]
+        allProjects.filter((project) => project.project_id === editId)[0]
       );
       getProjectLanguages(editId);
     } else {
@@ -209,7 +209,7 @@ const CreateProject = ({
         </div>
         <div className="language_form">
           <h3 className="form_subtitle">Technologies utilisées :</h3>
-          {languages.map((lang) => (
+          {allLanguages.map((lang) => (
             <label htmlFor="project_language" className="checkbox_label">
               <input
                 type="checkbox"
@@ -259,9 +259,9 @@ const CreateProject = ({
   );
 };
 
-const mapStateToProps = ({ languages, projects, projectLanguages }) => ({
-  languages,
-  projects,
+const mapStateToProps = ({ allLanguages, allProjects, projectLanguages }) => ({
+  allLanguages,
+  allProjects,
   projectLanguages,
 });
 
@@ -270,4 +270,4 @@ const mapDispatchToProps = (dispatch) => ({
   setProjectLanguages: setProjectLanguages(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectForm);

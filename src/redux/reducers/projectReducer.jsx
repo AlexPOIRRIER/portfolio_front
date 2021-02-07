@@ -1,4 +1,4 @@
-const projects = (state = [], action) => {
+const allProjects = (state = [], action) => {
   switch (action.type) {
     case "GET_ALL_PROJECTS_RESULT":
       return action.payload;
@@ -13,4 +13,4 @@ const projects = (state = [], action) => {
   }
 };
 
-export default projects;
+export default allProjects;

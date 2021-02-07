@@ -11,24 +11,25 @@ import "../../css/Project/ProjectDetails.css";
 import { ArrowIcon } from "../../utils/svg";
 
 const ProjectDetails = ({
-  projects,
   match,
-  getProjectLanguages,
+  allProjects,
   projectLanguages,
+  getProjectLanguages,
 }) => {
   const { id } = match.params;
   const [loading, setLoading] = useState(true);
   const [currentProject, setCurrentProject] = useState();
 
   useEffect(() => {
-    if (projects) {
-      setCurrentProject(projects.find((project) => project.project_id === +id));
+    if (allProjects) {
+      setCurrentProject(
+        allProjects.find((project) => project.project_id === +id)
+      );
       getProjectLanguages(+id);
     }
     setLoading(false);
-  }, [projects]);
+  }, [allProjects]);
 
-  console.log(projectLanguages);
   return (
     <>
       <Link to="/" className="back_btn">
@@ -73,8 +74,8 @@ const ProjectDetails = ({
   );
 };
 
-const mapStateToProps = ({ projects, projectLanguages }) => ({
-  projects,
+const mapStateToProps = ({ allProjects, projectLanguages }) => ({
+  allProjects,
   projectLanguages,
 });
 
