@@ -1,15 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import "../../css/Project/ProjectPreview.css";
 
-const ProjectPreview = ({ name, link, duration, client, background }) => {
+const ProjectPreview = ({ name, link, background }) => {
   return (
     <div
       className="preview_container"
       style={
         background
-          ? { background: `url(${background})`, backgroundSize: "cover", animation: 'backMove 150s infinite' }
+          ? {
+              background: `url(${background})`,
+              backgroundSize: "cover",
+              animation: "backMove 150s infinite",
+            }
           : { backgroundColor: "rgb(0,0,0,0.5)" }
       }
     >
@@ -17,8 +20,6 @@ const ProjectPreview = ({ name, link, duration, client, background }) => {
       <a href={link} target="_blank" rel="noreferrer">
         {link}
       </a>
-      <span>{duration}</span>
-      <span>{client}</span>
     </div>
   );
 };

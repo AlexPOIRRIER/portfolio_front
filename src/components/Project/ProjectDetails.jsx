@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import ProjectPreview from "../Project/ProjectPreview";
+import ProjectPreview from "./ProjectPreview";
 import LoadingSpinner from "../_reusable/LoadingSpinner";
 
 import { getProjectLanguages } from "../../redux/actions/joinLanguageProjectActions";
 
-import "../../css/Home/ProjectDetails.css";
-import { Link } from "react-router-dom";
+import "../../css/Project/ProjectDetails.css";
+
 import { ArrowIcon } from "../../utils/svg";
-import projectLanguages from "../../redux/reducers/joinLanguageProjectReducer";
+import HomeHeader from "../Navigation/Header/HomeHeader";
 
 const ProjectDetails = ({
-  projects,
   match,
-  getProjectLanguages,
+  allProjects,
   projectLanguages,
+  getProjectLanguages,
 }) => {
   const { id } = match.params;
   const [loading, setLoading] = useState(true);
   const [currentProject, setCurrentProject] = useState();
 
   useEffect(() => {
-    if (projects) {
-      setCurrentProject(projects.find((project) => project.project_id === +id));
+    if (allProjects) {
+      setCurrentProject(
+        allProjects.find((project) => project.project_id === +id)
+      );
       getProjectLanguages(+id);
     }
     setLoading(false);
-  }, [projects]);
+  }, [allProjects]);
 
-  console.log(projectLanguages);
   return (
     <>
+      <HomeHeader />
       <Link to="/" className="back_btn">
         <ArrowIcon cssClass="back_icon" />
       </Link>
@@ -57,7 +60,7 @@ const ProjectDetails = ({
               </a>
               <span className="info_title">Durée du projet : </span>
               <span className="info_value">
-                {currentProject.client_duration}
+                {currentProject.project_duration}
               </span>
               <span className="info_title">Client : </span>
               <span className="info_value">{currentProject.client_name}</span>
@@ -73,8 +76,8 @@ const ProjectDetails = ({
   );
 };
 
-const mapStateToProps = ({ projects, projectLanguages }) => ({
-  projects,
+const mapStateToProps = ({ allProjects, projectLanguages }) => ({
+  allProjects,
   projectLanguages,
 });
 

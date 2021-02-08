@@ -4,22 +4,21 @@ import { connect } from "react-redux";
 
 import ProjectPreview from "../Project/ProjectPreview";
 
-import "../../css/Home/Home.css";
+import "../../css/Home.css";
+import HomeHeader from "../Navigation/Header/HomeHeader";
 
-const Home = ({ projects }) => {
+const Home = ({ allProjects }) => {
   return (
     <>
-      {projects && (
+      <HomeHeader />
+      {allProjects && (
         <>
           <h2 className="page_title">Projets :</h2>
           <div className="project_preview_container">
-            {projects.map((project) => (
+            {allProjects.map((project) => (
               <Link to={`/project/${project.project_id}`}>
                 <ProjectPreview
                   name={project.project_name}
-                  // link={project.project_link}
-                  // duration={project.project_duration}
-                  // client={project.client_name}
                   background={project.background}
                 />
               </Link>
@@ -30,8 +29,8 @@ const Home = ({ projects }) => {
     </>
   );
 };
-const mapStateToProps = ({ projects }) => ({
-  projects,
+const mapStateToProps = ({ allProjects }) => ({
+  allProjects,
 });
 
 export default connect(mapStateToProps, null)(Home);
