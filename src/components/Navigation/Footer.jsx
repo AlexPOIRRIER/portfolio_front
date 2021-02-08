@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="footer_container">
       <p>Copyright to myself</p>
-      <Link to="/admin" className="admin_btn">
+      <Link to="/login" className="admin_btn">
         ADMIN
       </Link>
     </footer>

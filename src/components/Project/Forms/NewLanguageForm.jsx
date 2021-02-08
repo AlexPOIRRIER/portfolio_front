@@ -32,7 +32,7 @@ const NewLanguageForm = ({ addLanguage }) => {
           className="form_btn"
           onClick={() => setToggle(!toggle)}
         >
-          Ajouter
+          +
         </button>
       )}
       {toggle && (
