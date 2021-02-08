@@ -12,6 +12,7 @@ const ConfirmCancelButtons = ({ popUp, setPopUp }) => {
     await popUp.func();
     setPopUp();
   };
+
   const handleCancel = (event) => {
     event.preventDefault();
     setPopUp();
@@ -30,8 +31,9 @@ const ConfirmCancelButtons = ({ popUp, setPopUp }) => {
   );
 };
 
-const mapStateToProps = ({ popUp }) => ({
+const mapStateToProps = ({ popUp, newMessage }) => ({
   popUp,
+  newMessage,
 });
 
 const mapDispatchToProps = (dispatch) => ({

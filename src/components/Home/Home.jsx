@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import ProjectPreview from "./Project/ProjectPreview";
+import ProjectPreview from "../Project/ProjectPreview";
 
-import "../css/Home.css";
+import "../../css/Home.css";
+import HomeHeader from "../Navigation/Header/HomeHeader";
 
 const Home = ({ allProjects }) => {
   return (
     <>
+      <HomeHeader />
       {allProjects && (
         <>
           <h2 className="page_title">Projets :</h2>

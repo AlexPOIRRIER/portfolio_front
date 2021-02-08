@@ -8,21 +8,27 @@ export const getProjectLanguages = (dispatch) => async (projectId) => {
     `${process.env.REACT_APP_API}/jlp/${projectId}`
   );
   const { data } = result;
-  dispatch({
-    type: "SET_PROJECT_LANGUAGES",
-    payload: data,
-  });
+  if (data) {
+    dispatch({
+      type: "SET_PROJECT_LANGUAGES",
+      payload: data,
+    });
+  } else {
+    dispatch({
+      type: "RESET_PROJECT_LANGUAGES",
+    });
+  }
 };
 
 export const setProjectLanguages = (dispatch) => async (data) => {
-  // if (data) {
-  //   dispatch({
-  //     type: "SET_PROJECT_LANGUAGES",
-  //     payload: data,
-  //   });
-  // } else {
-  //   dispatch({
-  //     type: "RESET_PROJECT_LANGUAGES",
-  //   });
-  // }
+  if (data) {
+    dispatch({
+      type: "SET_PROJECT_LANGUAGES",
+      payload: data,
+    });
+  } else {
+    dispatch({
+      type: "RESET_PROJECT_LANGUAGES",
+    });
+  }
 };

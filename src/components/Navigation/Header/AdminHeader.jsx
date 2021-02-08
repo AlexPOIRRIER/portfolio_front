@@ -5,22 +5,16 @@ import SocialMedia from "../../_reusable/SocialMedia";
 
 import "../../../css/Navigation/Header/Header.css";
 
-const Header = () => {
+const AdminHeader = () => {
   return (
     <header className="header_container">
       <Title />
-      <Link to="/contact" className="admin_btn">
-        Contact
-      </Link>
       <Link to="/messages" className="admin_btn">
         Messages
-      </Link>
-      <Link to="/admin" className="admin_btn">
-        ADMIN
       </Link>
       <SocialMedia />
     </header>
   );
 };
 
-export default Header;
+export default AdminHeader;

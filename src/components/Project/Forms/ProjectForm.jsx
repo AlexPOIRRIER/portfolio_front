@@ -3,14 +3,12 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import {
-  getProjectLanguages,
-  setProjectLanguages,
-} from "../../../redux/actions/joinLanguageProjectActions";
+import { getProjectLanguages, setProjectLanguages } from "../../../redux/actions/joinLanguageProjectActions";
 
 import NewLanguageForm from "./NewLanguageForm";
 
 import "../../../css/Project/Forms/ProjectForm.css";
+import AdminHeader from "../../Navigation/Header/AdminHeader";
 
 const ProjectForm = ({
   match,
@@ -140,122 +138,132 @@ const ProjectForm = ({
     }
   }, [editId]);
 
-  console.log(projectLanguages);
   return (
-    <div className="admin_page_container">
-      <h2>{editId ? "Modifier un projet" : "Créer un projet"}</h2>
-      <form className="form_container">
-        <div
-          className="project_form"
-          style={{ display: "flex", flexDirection: "column" }}
-        >
-          <h3 className="form_subtitle">Projet :</h3>
-          <label htmlFor="project_name" className="form_label">
-            Nom du projet :
-            <input
-              type="text"
-              id="name"
-              name="project_name"
-              className="form_input"
-              value={
-                currentProject ? currentProject.project_name : projectData.name
-              }
-              onChange={handleProjectChange}
-            />
-          </label>
-          <label htmlFor="project_link" className="form_label">
-            Lien vers le projet :
-            <input
-              type="text"
-              id="link"
-              name="project_link"
-              className="form_input"
-              value={
-                currentProject ? currentProject.project_link : projectData.link
-              }
-              onChange={handleProjectChange}
-            />
-          </label>
-          <label htmlFor="project_duration" className="form_label">
-            Durée du développement :
-            <input
-              type="text"
-              id="duration"
-              name="project_duration"
-              className="form_input"
-              value={
-                currentProject
-                  ? currentProject.project_duration
-                  : projectData.duration
-              }
-              onChange={handleProjectChange}
-            />
-          </label>
-          <label htmlFor="background" className="form_label">
-            Image de couverture :
-            <input
-              type="text"
-              id="background"
-              name="background"
-              className="form_input"
-              value={
-                currentProject
-                  ? currentProject.background
-                  : projectData.background
-              }
-              onChange={handleProjectChange}
-            />
-          </label>
-        </div>
-        <div className="language_form">
-          <h3 className="form_subtitle">Technologies utilisées :</h3>
-          {allLanguages.map((lang) => (
-            <label htmlFor="project_language" className="checkbox_label">
+    <>
+      <AdminHeader />
+      <div className="admin_page_container">
+        <h2>{editId ? "Modifier un projet" : "Créer un projet"}</h2>
+        <form className="form_container">
+          <div
+            className="project_form"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <h3 className="form_subtitle">Projet :</h3>
+            <label htmlFor="project_name" className="form_label">
+              Nom du projet :
               <input
-                type="checkbox"
-                name="project_language"
-                id={lang.id}
-                value={lang.name}
-                checked={projectLanguages.find((e) => e.id === +lang.id)}
-                onChange={handleLanguageChange}
+                type="text"
+                id="name"
+                name="project_name"
+                className="form_input"
+                value={
+                  currentProject
+                    ? currentProject.project_name
+                    : projectData.name
+                }
+                onChange={handleProjectChange}
               />
-              <span>{lang.name}</span>
             </label>
-          ))}
-          <NewLanguageForm />
+            <label htmlFor="project_link" className="form_label">
+              Lien vers le projet :
+              <input
+                type="text"
+                id="link"
+                name="project_link"
+                className="form_input"
+                value={
+                  currentProject
+                    ? currentProject.project_link
+                    : projectData.link
+                }
+                onChange={handleProjectChange}
+              />
+            </label>
+            <label htmlFor="project_duration" className="form_label">
+              Durée du développement :
+              <input
+                type="text"
+                id="duration"
+                name="project_duration"
+                className="form_input"
+                value={
+                  currentProject
+                    ? currentProject.project_duration
+                    : projectData.duration
+                }
+                onChange={handleProjectChange}
+              />
+            </label>
+            <label htmlFor="background" className="form_label">
+              Image de couverture :
+              <input
+                type="text"
+                id="background"
+                name="background"
+                className="form_input"
+                value={
+                  currentProject
+                    ? currentProject.background
+                    : projectData.background
+                }
+                onChange={handleProjectChange}
+              />
+            </label>
+          </div>
+          <div className="language_form">
+            <h3 className="form_subtitle">Technologies utilisées :</h3>
+            {allLanguages.map((lang) => (
+              <label htmlFor="project_language" className="checkbox_label">
+                <input
+                  type="checkbox"
+                  name="project_language"
+                  id={lang.id}
+                  value={lang.name}
+                  checked={projectLanguages.find((e) => e.id === +lang.id)}
+                  onChange={handleLanguageChange}
+                />
+                <span>{lang.name}</span>
+              </label>
+            ))}
+            <NewLanguageForm />
+          </div>
+          <div className="client_form">
+            <h3 className="form_subtitle">Client :</h3>
+            <label htmlFor="project_client" className="form_label">
+              Client :
+              <input
+                type="text"
+                name="project_client"
+                className="form_input"
+                value={
+                  currentProject ? currentProject.client_name : clientData.name
+                }
+                onChange={handleClientChange}
+              />
+            </label>
+          </div>
+        </form>
+        <div className="form_btn_container">
+          {currentProject ? (
+            <button
+              type="button"
+              className="form_btn"
+              onClick={handleEditSubmit}
+            >
+              Confirmer
+            </button>
+          ) : (
+            <button type="button" className="form_btn" onClick={handleSubmit}>
+              Confirmer
+            </button>
+          )}
+          <Link to="/admin" onClick={handleClear}>
+            <button className="form_btn">Annuler</button>
+          </Link>
+          {redirect && <Redirect to="/admin" />}
         </div>
-        <div className="client_form">
-          <h3 className="form_subtitle">Client :</h3>
-          <label htmlFor="project_client" className="form_label">
-            Client :
-            <input
-              type="text"
-              name="project_client"
-              className="form_input"
-              value={
-                currentProject ? currentProject.client_name : clientData.name
-              }
-              onChange={handleClientChange}
-            />
-          </label>
-        </div>
-      </form>
-      <div className="form_btn_container">
-        {currentProject ? (
-          <button type="button" className="form_btn" onClick={handleEditSubmit}>
-            Confirmer
-          </button>
-        ) : (
-          <button type="button" className="form_btn" onClick={handleSubmit}>
-            Confirmer
-          </button>
-        )}
-        <Link to="/admin" onClick={handleClear}>
-          <button className="form_btn">Annuler</button>
-        </Link>
-        {redirect && <Redirect to="/admin" />}
       </div>
-    </div>
+    </>
   );
 };
 

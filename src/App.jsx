@@ -5,17 +5,17 @@ import { connect } from "react-redux";
 import { getAllLanguages } from "./redux/actions/languageActions";
 import { getAllProjects } from "./redux/actions/projectActions";
 
-import Header from "./components/Navigation/Header/Header";
-import Home from "./components/Home";
-import Admin from "./components/Admin";
+import Header from "./components/Navigation/Header/HomeHeader";
+import Home from "./components/Home/Home";
+import Contact from "./components/Home/Contact";
+import Admin from "./components/Admin/Admin";
+import MessageList from "./components/Admin/Message/MessageList";
+import MessageDetails from "./components/Admin/Message/MessageDetails";
 import ProjectForm from "./components/Project/Forms/ProjectForm";
 import ProjectDetails from "./components/Project/ProjectDetails";
-import Contact from "./components/Contact";
-import MessageList from "./components/Message/MessageList";
 import Footer from "./components/Navigation/Footer";
 
 import "./App.css";
-import MessageDetails from "./components/Message/MessageDetails";
 
 const App = ({ getAllLanguages, getAllProjects }) => {
   useEffect(() => {
@@ -25,7 +25,6 @@ const App = ({ getAllLanguages, getAllProjects }) => {
 
   return (
     <div className="App">
-      <Header />
       <main>
         <Switch>
           <Route exact path="/" component={Home} />

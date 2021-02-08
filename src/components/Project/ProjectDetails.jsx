@@ -9,6 +9,7 @@ import { getProjectLanguages } from "../../redux/actions/joinLanguageProjectActi
 import "../../css/Project/ProjectDetails.css";
 
 import { ArrowIcon } from "../../utils/svg";
+import HomeHeader from "../Navigation/Header/HomeHeader";
 
 const ProjectDetails = ({
   match,
@@ -32,6 +33,7 @@ const ProjectDetails = ({
 
   return (
     <>
+      <HomeHeader />
       <Link to="/" className="back_btn">
         <ArrowIcon cssClass="back_icon" />
       </Link>

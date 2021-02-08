@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import "../../css/Message/MessagePreview.css";
+import "../../../css/Message/MessagePreview.css";
 
 const MessagePreview = ({ msg }) => {
   const { name, email, subject, message, answered } = msg;

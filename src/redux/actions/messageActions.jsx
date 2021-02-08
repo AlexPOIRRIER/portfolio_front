@@ -28,8 +28,13 @@ export const createMessage = (dispatch) => async (newMessage) => {
 };
 
 export const setNewMessage = (dispatch) => async (data) => {
+  if (data) {
+    dispatch({
+      type: "SET_MESSAGE",
+      payload: data,
+    });
+  }
   dispatch({
-    type: "SET_MESSAGE",
-    payload: data,
+    type: "RESET_MESSAGE",
   });
 };
