@@ -1,17 +1,17 @@
 import { combineReducers } from "redux";
-import allLanguages from "./languageReducer";
 import allProjects from "./projectReducer";
-import projectLanguages from "./joinLanguageProjectReducer";
+import { allLanguages, currentProjectLanguages } from "./languageReducer";
+
 import { allMessages, newMessage } from "./messageReducer";
-import popUp from "./popupReducer";
+import popup from "./popupReducer";
 
 const rootReducer = combineReducers({
-  allLanguages,
-  allProjects,
-  projectLanguages,
-  popUp,
-  allMessages,
-  newMessage,
+	allProjects,
+	allLanguages,
+	currentProjectLanguages,
+	popup,
+	allMessages,
+	newMessage,
 });
 
 export default rootReducer;

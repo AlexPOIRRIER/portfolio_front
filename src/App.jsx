@@ -1,53 +1,39 @@
 import { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { getAllLanguages } from "./redux/actions/languageActions";
-import { getAllProjects } from "./redux/actions/projectActions";
+import { setAllLanguages } from "./redux/actions/languageActions";
+import { setAllProjects } from "./redux/actions/projectActions";
 
+import NavBar from "./components/Navigation/NavBar";
 import Home from "./components/Home/Home";
-import Contact from "./components/Home/Contact";
-import LogIn from "./components/Admin/LogIn";
-import Admin from "./components/Admin/Admin";
-import MessageList from "./components/Admin/Message/MessageList";
-import MessageDetails from "./components/Admin/Message/MessageDetails";
-import ProjectForm from "./components/Project/Forms/ProjectForm";
-import ProjectDetails from "./components/Project/ProjectDetails";
-import Footer from "./components/Navigation/Footer";
+import ProjectList from "./components/Project/ProjectList";
+import Contact from "./components/Contact/Contact";
 
 import "./App.css";
-import SideBar from "./components/Navigation/SideBar";
+import About from "./components/About/About";
 
-const App = ({ getAllLanguages, getAllProjects }) => {
-  useEffect(() => {
-    getAllLanguages();
-    getAllProjects();
-  }, []);
+const App = ({ setAllLanguages, setAllProjects }) => {
+	useEffect(() => {
+		setAllProjects();
+		setAllLanguages();
+	}, [setAllLanguages, setAllProjects]);
 
-  return (
-    <div className="App">
-      <main>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/project/:id" component={ProjectDetails} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/admin" component={Admin} />
-          <Route path="/createProject" component={ProjectForm} />
-          <Route path="/editProject/:id" component={ProjectForm} />
-          <Route path="/messages" component={MessageList} />
-          <Route path="/message/:id" component={MessageDetails} />
-        </Switch>
-      </main>
-      {/* <SideBar /> */}
-      <Footer />
-    </div>
-  );
+	return (
+		<div className="App">
+			<main>
+				<Home />
+				<About />
+				<ProjectList />
+				<Contact />
+			</main>
+			<NavBar />
+		</div>
+	);
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllProjects: getAllProjects(dispatch),
-  getAllLanguages: getAllLanguages(dispatch),
+	setAllProjects: setAllProjects(dispatch),
+	setAllLanguages: setAllLanguages(dispatch),
 });
 
 export default connect(null, mapDispatchToProps)(App);

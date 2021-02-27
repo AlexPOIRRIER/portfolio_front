@@ -4,85 +4,85 @@ import { connect } from "react-redux";
 import ProjectPreview from "./ProjectPreview";
 import LoadingSpinner from "../_reusable/LoadingSpinner";
 
-import { getProjectLanguages } from "../../redux/actions/joinLanguageProjectActions";
+import { setCurrentProjectLanguages } from "../../redux/actions/languageActions";
 
 import "../../css/Project/ProjectDetails.css";
 
 import { ArrowIcon } from "../../utils/svg";
-import HomeHeader from "../Navigation/Header/HomeHeader";
 
 const ProjectDetails = ({
-  match,
-  allProjects,
-  projectLanguages,
-  getProjectLanguages,
+	match,
+	allProjects,
+	currentProjectLanguages,
+	setCurrentProjectLanguages,
 }) => {
-  const { id } = match.params;
-  const [loading, setLoading] = useState(true);
-  const [currentProject, setCurrentProject] = useState();
+	const { id } = match.params;
+	const [loading, setLoading] = useState(true);
+	const [currentProject, setCurrentProject] = useState();
 
-  useEffect(() => {
-    if (allProjects) {
-      setCurrentProject(
-        allProjects.find((project) => project.project_id === +id)
-      );
-      getProjectLanguages(+id);
-    }
-    setLoading(false);
-  }, [allProjects]);
+	useEffect(() => {
+		if (allProjects) {
+			setCurrentProject(allProjects.find((project) => project.id === +id));
+			setCurrentProjectLanguages(+id);
+		}
+		setLoading(false);
+	}, [id, allProjects, setCurrentProjectLanguages]);
 
-  return (
-    <>
-      <HomeHeader />
-      <Link to="/" className="back_btn">
-        <ArrowIcon cssClass="back_icon" />
-      </Link>
-      <div className="project_details_container">
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <>
-            <ProjectPreview
-              background={currentProject.background}
-              name={currentProject.project_name}
-            />
-            <div className="info_container">
-              <h2 className="info_project_title">
-                {currentProject.project_name}
-              </h2>
-              <span className="info_title">Lien vers l'application : </span>
-              <a
-                href={currentProject.project_link}
-                target="_blank"
-                className="info_value"
-              >
-                {currentProject.project_link}
-              </a>
-              <span className="info_title">Durée du projet : </span>
-              <span className="info_value">
-                {currentProject.project_duration}
-              </span>
-              <span className="info_title">Client : </span>
-              <span className="info_value">{currentProject.client_name}</span>
-              <span className="info_title">Technologies utilisées : </span>
-              {projectLanguages.map((lang) => (
-                <span className="info_value">{lang.name}</span>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-    </>
-  );
+	return (
+		<>
+			<Link to="/" className="back_btn">
+				<ArrowIcon cssClass="back_icon" />
+			</Link>
+			<div className="project_details_container">
+				{loading ? (
+					<LoadingSpinner />
+				) : (
+					<>
+						<ProjectPreview
+							background={currentProject.background}
+							name={currentProject.name}
+						/>
+						<div className="info_container">
+							<h2 className="info_project_title">{currentProject.name}</h2>
+							<span className="info_title">Lien vers l'application : </span>
+							<a
+								href={currentProject.link}
+								target="_blank"
+								rel="noreferrer"
+								className="info_value"
+							>
+								{currentProject.name}
+							</a>
+							<span className="info_title">Durée du projet : </span>
+							<span className="info_value">{currentProject.duration}</span>
+							<span className="info_title">Description du projet : </span>
+							<span
+								className="info_value"
+								dangerouslySetInnerHTML={{ __html: currentProject.description }}
+							></span>
+							<span className="info_title">Client : </span>
+							<span className="info_value">{currentProject.client_name}</span>
+							<span className="info_title">Technologies utilisées : </span>
+							{currentProjectLanguages.map((lang) => (
+								<span className="info_value" key={lang.id}>
+									{lang.name}
+								</span>
+							))}
+						</div>
+					</>
+				)}
+			</div>
+		</>
+	);
 };
 
-const mapStateToProps = ({ allProjects, projectLanguages }) => ({
-  allProjects,
-  projectLanguages,
+const mapStateToProps = ({ allProjects, currentProjectLanguages }) => ({
+	allProjects,
+	currentProjectLanguages,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getProjectLanguages: getProjectLanguages(dispatch),
+	setCurrentProjectLanguages: setCurrentProjectLanguages(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectDetails);

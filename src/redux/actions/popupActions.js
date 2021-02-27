@@ -1,4 +1,4 @@
-export const setPopUp = (dispatch) => async (bool, func) => {
+export const setPopup = (dispatch) => async (bool, func) => {
   if (bool && func) {
     dispatch({
       type: "SET_POPUP",

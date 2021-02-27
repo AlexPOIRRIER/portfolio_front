@@ -1,36 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { HashLink } from "react-router-hash-link";
 
-import ProjectPreview from "../Project/ProjectPreview";
+import Title from "../Navigation/Title";
 
-import "../../css/Home.css";
-import HomeHeader from "../Navigation/Header/HomeHeader";
+import { BiDownArrow as ArrowIcon } from "react-icons/bi";
 
-const Home = ({ allProjects }) => {
-  return (
-    <>
-      <HomeHeader />
-      {allProjects && (
-        <>
-          <h2 className="page_title">Projets :</h2>
-          <div className="project_preview_container">
-            {allProjects.map((project) => (
-              <Link to={`/project/${project.project_id}`}>
-                <ProjectPreview
-                  name={project.project_name}
-                  background={project.background}
-                />
-              </Link>
-            ))}
-          </div>
-        </>
-      )}
-    </>
-  );
+import "../../css/Home/Home.css";
+
+const Home = () => {
+	return (
+		<section className="home_section" id="home">
+			<Title />
+			<HashLink smooth to="#about" className="arrow_container">
+				<ArrowIcon size={100} />
+				<ArrowIcon size={100} />
+			</HashLink>
+		</section>
+	);
 };
-const mapStateToProps = ({ allProjects }) => ({
-  allProjects,
-});
 
-export default connect(mapStateToProps, null)(Home);
+export default Home;

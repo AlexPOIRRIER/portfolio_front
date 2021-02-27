@@ -1,50 +1,45 @@
 :root {
-  --darkBlue: #15202b;
-  --lightBlue: #38cccc;
+	--darkBlue: #15202b;
+	--lightBlue: #38cccc;
 }
 
 @font-face {
-  font-family: varela;
-  src: url("./assets/fonts/VarelaRound-Regular.ttf");
+	font-family: varela;
+	src: url("./assets/fonts/VarelaRound-Regular.ttf");
+	font-display: swap;
 }
 
 .App {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(0, 0, 0, 0.5);
-  color: white;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--darkBlue);
+	color: white;
 }
 
 * {
-  font-family: varela;
+	font-family: varela;
 }
 
 a {
-  text-decoration: none;
-  color: white;
+	text-decoration: none;
 }
 
-main {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+main,
+section {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-/* .dark {
-  background-color: #15202b;
-  color: white;
+section {
+	min-height: 100vh;
 }
-
-.light {
-  background-color: white;
-  color: #15202b;
-} */

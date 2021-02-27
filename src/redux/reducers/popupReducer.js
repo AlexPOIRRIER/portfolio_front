@@ -1,4 +1,4 @@
-const popUp = (state = { toggle: false, func: null }, action) => {
+const popup = (state = { toggle: false, func: null }, action) => {
   switch (action.type) {
     case "SET_POPUP":
       return {
@@ -13,4 +13,4 @@ const popUp = (state = { toggle: false, func: null }, action) => {
   }
 };
 
-export default popUp;
+export default popup;

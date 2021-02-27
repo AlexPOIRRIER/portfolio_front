@@ -1,0 +1,39 @@
+.scroll_top_btn {
+	position: fixed;
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	bottom: 1rem;
+	right: 1rem;
+	height: 3rem;
+	width: 3rem;
+	border-radius: 50%;
+	border: none;
+	outline: transparent;
+	background-color: rgb(0, 0, 0, 0.5);
+}
+
+.icon_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	animation: scrollBtn 1s infinite linear;
+}
+
+.show {
+	display: flex;
+}
+
+@keyframes scrollBtn {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}

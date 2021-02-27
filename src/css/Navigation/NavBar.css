@@ -1,0 +1,67 @@
+.toggle_btn {
+	position: fixed;
+	top: 1rem;
+	right: 1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: transparent;
+	width: 3rem;
+	height: 3rem;
+	border: none;
+	background-color: black;
+	border-bottom: 1px solid white;
+	color: white;
+	border-radius: 50%;
+}
+
+.side_bar_container {
+	position: fixed;
+	right: 0rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100vh;
+}
+
+.side_bar_btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 10rem;
+	width: 4rem;
+	background-color: rgb(0, 0, 0);
+	color: white;
+	margin: 0.5rem;
+	font-size: 1.5rem;
+	transition: 0.5s;
+}
+
+.side_bar_btn:hover {
+	background-color: white;
+	color: black;
+	margin: 0.5rem 0;
+}
+
+.active_side_btn {
+	background-color: white;
+	color: black;
+	margin: 0.5rem 0;
+}
+
+@media screen and (max-width: 769px) {
+	.side_bar_container {
+		width: 100%;
+		bottom: 0;
+		left: 0;
+		flex-direction: row;
+		justify-content: space-between;
+		height: 4rem;
+	}
+	.side_bar_btn {
+		height: 100%;
+		margin: 0;
+		flex: 1;
+	}
+}
